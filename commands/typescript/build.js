@@ -14,9 +14,14 @@ module.exports = {
         let functions = fs.readdirSync(basePath)
         
         for (const func of functions) {
+            let functionPath = path.join(basePath, func, 'src');
+            let tsconfig = path.join(functionPath, 'tsconfig.json')
+            if (!fs.existsSync(tsconfig)) {
+                continue;
+            }
             print.info(`building ${func}:`);
             await tsc.compile({
-                'project': path.join(basePath, func, 'src')
+                'project': functionPath
             });
         }
 
