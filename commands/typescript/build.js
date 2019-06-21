@@ -9,10 +9,7 @@ module.exports = {
     run: async (context) => {
         const { amplify, print } = context
        
-        let projectDetails = await amplify.getProjectDetails();
-        const projectPath = projectDetails.projectConfig.projectPath 
-            ? projectDetails.projectConfig.projectPath
-            : projectDetails.localEnvInfo.projectPath;
+        const projectPath = amplify.pathManager.searchProjectRootPath();
         let basePath = path.join(projectPath, 'amplify/backend/function');
         let functions = fs.readdirSync(basePath)
         
